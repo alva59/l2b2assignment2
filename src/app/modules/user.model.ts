@@ -1,33 +1,7 @@
-import { Schema, model } from "mongoose";
-import { FullName, TUser, addressObj, ordersArray } from "./user.interface";
+import { Schema, model } from 'mongoose';
+import { TOrder, TUser } from './user/user.interface';
 
-const FullNameSchema = new Schema<FullName>({
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-});
-
-const addressSchema = new Schema<addressObj>({
-  street: {
-    type: String,
-    required: true,
-  },
-  city: {
-    type: String,
-    required: true,
-  },
-  country: {
-    type: String,
-    required: true,
-  },
-});
-
-const ordersSchema = new Schema<ordersArray>({
+const OrderSchema = new Schema<TOrder>({
   productName: {
     type: String,
     required: true,
@@ -42,7 +16,7 @@ const ordersSchema = new Schema<ordersArray>({
   },
 });
 
-const userSchema = new Schema<TUser>({
+const UserSchema = new Schema<TUser>({
   userId: {
     type: Number,
     required: true,
@@ -58,8 +32,14 @@ const userSchema = new Schema<TUser>({
     required: true,
   },
   fullName: {
-    type: FullNameSchema,
-    required: true,
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
   },
   age: {
     type: Number,
@@ -78,15 +58,23 @@ const userSchema = new Schema<TUser>({
     required: true,
   },
   address: {
-    type: addressSchema,
-    required: true,
-  },
-  orders: [
-    {
-      type: ordersSchema,
+    street: {
+      type: String,
       required: true,
     },
-  ],
+    city: {
+      type: String,
+      required: true,
+    },
+    country: {
+      type: String,
+      required: true,
+    },
+  },
+  orders: {
+    type: [OrderSchema],
+    required: true,
+  },
 });
 
-export const UserModel = model<TUser>("User", userSchema);
+export const UserModel = model<TUser>('User', UserSchema);
