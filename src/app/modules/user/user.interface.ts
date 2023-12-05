@@ -1,3 +1,9 @@
+export type TOrder = {
+  productName: string;
+  price: number;
+  quantity: number;
+};
+
 export type TUser = {
   userId: number;
   username: string;
@@ -16,10 +22,4 @@ export type TUser = {
     country: string;
   };
   orders: TOrder[];
-};
-
-export type TOrder = {
-  productName: string;
-  price: number;
-  quantity: number;
 };
