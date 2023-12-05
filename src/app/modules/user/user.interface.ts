@@ -1,3 +1,5 @@
+import { Model } from 'mongoose';
+
 export type TOrder = {
   productName: string;
   price: number;
@@ -23,3 +25,7 @@ export type TUser = {
   };
   orders: TOrder[];
 };
+
+export interface UserModelStatic extends Model<TUser> {
+  isUserExists(id: number): Promise<TUser | null>;
+}
