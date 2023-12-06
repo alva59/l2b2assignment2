@@ -24,6 +24,7 @@ export type TUser = {
     country: string;
   };
   orders: TOrder[];
+  isDeleted: boolean;
 };
 
 export interface UserModelStatic extends Model<TUser> {

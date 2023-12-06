@@ -29,13 +29,14 @@ const getSingleUserFromDB = async (userId: number) => {
 const updateUserInDB = async (userId: number, user: TUser) => {
   const result = await UserModel.findOneAndUpdate(
     { userId, user },
+    { runValidators: true },
     { new: true },
   );
   return result;
 };
 
 const deleteUser = async (userId: number) => {
-  const result = await UserModel.findOneAndDelete({ userId });
+  const result = await UserModel.updateOne({ userId }, { isDeleted: true });
   return result;
 };
 

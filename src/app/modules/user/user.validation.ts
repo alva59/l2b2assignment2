@@ -26,6 +26,7 @@ const UserValidationSchema = z.object({
     country: z.string(),
   }),
   orders: z.array(OrderSchema),
+  isDeleted: z.boolean(),
 });
 
 export { UserValidationSchema };

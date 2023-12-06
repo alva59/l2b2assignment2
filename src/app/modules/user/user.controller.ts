@@ -65,17 +65,17 @@ const getSingleUser = async (req: Request, res: Response) => {
 
 const updateUser = async (req: Request, res: Response) => {
   try {
-    const user = req.body;
+    const { user: userData } = req.body;
+    const zodParsedData = await UserValidationSchema.parse(userData);
     const userId = Number(req.params.userId);
-    const result = await UserServices.updateUserInDB(userId, user);
+    const result = await UserServices.updateUserInDB(userId, zodParsedData);
 
-    if (result) {
-      res.status(200).json({
-        success: true,
-        message: 'User is updated successfully',
-        data: result,
-      });
-    }
+    res.status(200).json({
+      success: true,
+      message: 'User is updated successfully',
+      data: result,
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,
