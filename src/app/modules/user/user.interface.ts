@@ -17,7 +17,6 @@ export type TUser = {
     city: string;
     country: string;
   };
-  total: number;
   isDeleted: boolean;
 };
 
