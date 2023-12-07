@@ -1,4 +1,4 @@
-import { UserModel } from '../user.model';
+import { UserModel } from './user.model';
 import { TUser } from './user.interface';
 
 const createUserIntoDB = async (user: TUser) => {
@@ -22,8 +22,12 @@ const getAllUsersFromDB = async () => {
 };
 
 const getSingleUserFromDB = async (userId: number) => {
-  const result = await UserModel.findOne({ userId });
-  return result;
+  if (userId) {
+    const result = await UserModel.findOne({ userId });
+    return result;
+  } else {
+    throw new Error('user not found');
+  }
 };
 
 const updateUserInDB = async (userId: number, user: TUser) => {

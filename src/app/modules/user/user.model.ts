@@ -1,22 +1,7 @@
-import { Schema, model } from 'mongoose';
+import { Query, Schema, model } from 'mongoose';
 import bcrypt from 'bcrypt';
-import { TOrder, TUser, UserModelStatic } from './user/user.interface';
-import config from '../config';
-
-const OrderSchema = new Schema<TOrder>({
-  productName: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-  },
-});
+import { TUser, UserModelStatic } from './user.interface';
+import config from '../../config';
 
 const UserSchema = new Schema<TUser, UserModelStatic>({
   userId: {
@@ -73,10 +58,6 @@ const UserSchema = new Schema<TUser, UserModelStatic>({
       required: true,
     },
   },
-  orders: {
-    type: [OrderSchema],
-    required: true,
-  },
   isDeleted: {
     type: Boolean,
     default: false,
@@ -103,12 +84,7 @@ UserSchema.post('save', function (doc, next) {
   next();
 });
 
-UserSchema.pre('find', function (next) {
-  this.find({ isDeleted: { $ne: true } });
-  next();
-});
-
-UserSchema.pre('findOne', function (next) {
+UserSchema.pre(/^find/, function (this: Query<TUser, Document>, next) {
   this.find({ isDeleted: { $ne: true } });
   next();
 });
